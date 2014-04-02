@@ -112,7 +112,7 @@ var dartlingTypesModelJson = r'''
                "sequence":110,
                "name":"note",
                "category":"attribute",
-               "type":"String",
+               "type":"Description",
                "init":"",
                "essential":false,
                "sensitive":false

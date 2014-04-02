@@ -48,33 +48,36 @@ class EntityTable {
     row.nodes.add(thElement);
     
     TableCellElement tdElement = new Element.td();
-    var inputElement;
+    var element;
     if (attribute.type.code == 'bool') {
-      inputElement = new CheckboxInputElement();
+      element = new CheckboxInputElement();
+    } else if (attribute.type.code == 'Description') {
+      element = new TextAreaElement();
+      element.classes.add('entity-table area');
     } else {
-      inputElement = new InputElement();
+      element = new InputElement();
     }
     if (attribute.required) {
-      inputElement.attributes['required'] = 'required';
+      element.attributes['required'] = 'required';
     }
     if (attribute.length != null) {
-      inputElement.attributes['size'] = attribute.length.toString();
+      element.attributes['size'] = attribute.length.toString();
     }
     if (attribute.type.code == 'Email') {
-      inputElement.attributes['type'] = 'email';
+      element.attributes['type'] = 'email';
     }
-    tdElement.nodes.add(inputElement);
+    tdElement.nodes.add(element);
     row.nodes.add(tdElement);
     
     row.id = attribute.oid.toString();
     table.nodes.add(row);
   }
   
-  InputElement firstField() {
+  dynamic firstField() {
     return table.rows[0].nodes[1].nodes[0];
   }
   
-  InputElement rowField(TableRowElement row) {
+  dynamic rowField(TableRowElement row) {
     return row.nodes[1].nodes[0];
   }
   
@@ -124,40 +127,6 @@ class EntityTable {
     currentEntity = entity;
   }
   
-  validateValueType(Attribute attribute, String value) {
-    if (attribute.type.code == 'DateTime') {
-      try {
-        DateTime.parse(value);
-      } on FormatException catch (e) {
-        return false;
-      }
-    } else if (attribute.type.code == 'int') {
-      try {
-        int.parse(value);
-      } on FormatException catch (e) {
-        return false;
-      }
-    } else if (attribute.type.code == 'double') {
-      try {
-        double.parse(value);
-      } on FormatException catch (e) {
-        return false;
-      }
-    } else if (attribute.type.code == 'num') {
-      try {
-        num.parse(value);
-      } on FormatException catch (e) {
-        return false;
-      }
-    } else if (attribute.type.code == 'Uri') {
-      var uri = Uri.parse(value);
-      if (uri.host == '') {
-        return false;
-      }
-    }
-    return true;
-  }
-  
   addEntity(Event e) {
     var newEntity = entities.newEntity();
     for (Attribute attribute in nonIncrementAttributes) {
@@ -167,7 +136,7 @@ class EntityTable {
       } else {
         var value = rowField(row).value;
         if (value != '') {
-          if (validateValueType(attribute, value)) {
+          if (attribute.type.validate(value)) {
             newEntity.setStringToAttribute(attribute.code, value);
           }
         }
@@ -191,13 +160,13 @@ class EntityTable {
           var value = rowField(row).value;
           if (attribute.required) {
             if (value != '') {
-              if (validateValueType(attribute, value)) {
+              if (attribute.type.validate(value)) {
                 currentEntity.setStringToAttribute(attribute.code, value);
               }
             }
           } else {
             if (value != '') {
-              if (validateValueType(attribute, value)) {
+              if (attribute.type.validate(value)) {
                 currentEntity.setStringToAttribute(attribute.code, value);
               }
             } else {
