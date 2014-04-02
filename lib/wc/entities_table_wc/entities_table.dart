@@ -6,11 +6,23 @@ class EntitiesTable {
   
   TableElement table = querySelector('#entities-table');
   
-  EntitiesTableWc entitiesTableWc;
+  var context;
 
-  EntitiesTable(this.entitiesTableWc, this.entities) {
+  EntitiesTable(this.context, this.entities) {
     essentialAttributes = entities.concept.essentialAttributes;
-    display();
+    var incrementAttributes = entities.concept.incrementAttributes;
+    var idIncrementAttribute = false;
+    for (var attribute in incrementAttributes) {
+      if (attribute.identifier) {
+        idIncrementAttribute = true;
+        break;
+      }
+    }
+    if (idIncrementAttribute) {
+      display(sort:false);
+    } else {
+      display();
+    }
     addEventHandlers();
   }
   
@@ -86,11 +98,11 @@ class EntitiesTable {
     var dRow = (e.target as TableCellElement).parent;
     var idn = int.parse(dRow.id);
     var entity = entities.singleWhereOid(new Oid.ts(idn));
-    entitiesTableWc.entityTable.setEntity(entity);
+    context.entityTable.setEntity(entity);
   }
   
   save() {
-    entitiesTableWc.save();
+    context.save();
   }
 }
 

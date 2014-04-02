@@ -60,6 +60,9 @@ class EntityTable {
     if (attribute.length != null) {
       inputElement.attributes['size'] = attribute.length.toString();
     }
+    if (attribute.type.code == 'Email') {
+      inputElement.attributes['type'] = 'email';
+    }
     tdElement.nodes.add(inputElement);
     row.nodes.add(tdElement);
     
