@@ -1,0 +1,14 @@
+name: dartling_types
+author: Your Name
+homepage: http://ondart.me/
+version: 0.0.1
+description: dartling_types application that uses dartling for its model.
+environment:
+  sdk: '>=0.8.10+8 <2.0.0'
+dependencies:
+  browser: '>=0.9.0 <0.10.0'
+  dartling:
+    git: 'https://github.com/dzenanr/dartling.git'
+  dartling_default_app:
+    git: 'https://github.com/dzenanr/dartling_default_app.git'
+  
