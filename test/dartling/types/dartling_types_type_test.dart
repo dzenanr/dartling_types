@@ -1,16 +1,15 @@
  
 // test/dartling/types/dartling_types_type_test.dart 
  
-import "package:unittest/unittest.dart"; 
+import "package:test/test.dart"; 
 import "package:dartling/dartling.dart"; 
-import "package:dartling_types/dartling_types.dart"; 
+import "package:dartling_types/dartling_types.dart" as dt; 
  
 testDartlingTypesTypes( 
-    DartlingDomain dartlingDomain, TypesModel typesModel, Types types) { 
+    dt.DartlingDomain dartlingDomain, dt.TypesModel typesModel, dt.Types types) { 
   DomainSession session; 
   group("Testing Dartling.Types.Type", () { 
     session = dartlingDomain.newSession();  
-    expect(typesModel.isEmpty, isTrue); 
     setUp(() { 
       typesModel.init(); 
     }); 
@@ -72,7 +71,7 @@ testDartlingTypesTypes(
     test("Add type required error", () { 
       var typeConcept = types.concept; 
       var typeCount = types.length; 
-      var type = new Type(typeConcept); 
+      var type = new dt.Type(typeConcept); 
       var added = types.add(type); 
       expect(added, isFalse); 
       expect(types.length, equals(typeCount)); 
@@ -153,7 +152,7 @@ testDartlingTypesTypes(
       expect(selectedTypes.source.isEmpty, isFalse); 
       var typesCount = types.length; 
  
-      var type = new Type(types.concept); 
+      var type = new dt.Type(types.concept); 
       type.title = 'enquiry'; 
       type.email = 'rachel@clark.com'; 
       type.started = new DateTime.now(); 
@@ -249,7 +248,7 @@ testDartlingTypesTypes(
  
     test("Update type non id attribute with failure", () { 
       var randomType = types.random(); 
-      var beforeUpdateValue = randomType.title; 
+      //var beforeUpdateValue = randomType.title; 
       var afterUpdateEntity = randomType.copy(); 
       afterUpdateEntity.title = 'text'; 
       expect(afterUpdateEntity.title, equals('text')); 
@@ -295,9 +294,8 @@ testDartlingTypesTypes(
     }); 
  
     test("New type action undo and redo", () { 
-      var typeConcept = types.concept; 
       var typeCount = types.length; 
-          var type = new Type(types.concept); 
+          var type = new dt.Type(types.concept); 
       type.title = 'college'; 
       type.email = 'brian@torres.com'; 
       type.started = new DateTime.now(); 
@@ -325,9 +323,8 @@ testDartlingTypesTypes(
     }); 
  
     test("New type session undo and redo", () { 
-      var typeConcept = types.concept; 
       var typeCount = types.length; 
-          var type = new Type(types.concept); 
+          var type = new dt.Type(types.concept); 
       type.title = 'question'; 
       type.email = 'karen@harris.com'; 
       type.started = new DateTime.now(); 
@@ -449,15 +446,14 @@ testDartlingTypesTypes(
       //types.display(title:"Transaction with an error"); 
     }); 
  
-    test("Reactions to type actions", () { 
-      var typeConcept = types.concept; 
+    test("Reactions to type actions", () {  
       var typeCount = types.length; 
  
       var reaction = new TypeReaction(); 
       expect(reaction, isNotNull); 
  
       dartlingDomain.startActionReaction(reaction); 
-          var type = new Type(types.concept); 
+          var type = new dt.Type(types.concept); 
       type.title = 'tent'; 
       type.email = 'patrick@smith.com'; 
       type.started = new DateTime.now(); 
@@ -503,7 +499,7 @@ class TypeReaction implements ActionReactionApi {
 } 
  
 void main() { 
-  var repository = new Repository(); 
+  var repository = new dt.Repository(); 
   var dartlingDomain = repository.getDomainModels("Dartling");   
   assert(dartlingDomain != null); 
   var typesModel = dartlingDomain.getModelEntries("Types");  

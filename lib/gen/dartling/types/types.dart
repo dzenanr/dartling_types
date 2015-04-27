@@ -4,9 +4,12 @@ part of dartling_types;
  
 abstract class TypeGen extends ConceptEntity<Type> { 
  
-  TypeGen(Concept concept) : super.of(concept); 
+  TypeGen(Concept concept) {
+    this.concept = concept;
+  }
  
-  TypeGen.withId(Concept concept, int sequence) : super.of(concept) { 
+  TypeGen.withId(Concept concept, int sequence) { 
+    this.concept = concept;
     setAttribute("sequence", sequence); 
   } 
  
@@ -54,7 +57,9 @@ abstract class TypeGen extends ConceptEntity<Type> {
  
 abstract class TypesGen extends Entities<Type> { 
  
-  TypesGen(Concept concept) : super.of(concept); 
+  TypesGen(Concept concept) {
+    this.concept = concept;
+  }
  
   Types newEntities() => new Types(concept); 
   Type newEntity() => new Type(concept); 

@@ -142,7 +142,7 @@ class EntityTable {
         }
       }    
     }
-    var added = entities.add(newEntity);
+    entities.add(newEntity);
     entitiesTable.display();
     entitiesTable.save();
     setEntity(newEntity);
