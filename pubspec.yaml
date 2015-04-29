@@ -1,14 +1,12 @@
 name: dartling_types
 author: Dzenan Ridjanovic
 homepage: http://ondart.me/
-version: 0.0.2
-description: dartling_types application that uses dartling for its model.
+version: 2.0.1
+description: a generic web component done by meta-programming in dartling.
 environment:
   sdk: '>=1.9.3 <2.0.0'
 dependencies:
   browser: any
-  dartling:
-    git: git://github.com/dzenanr/dartling.git
-  dartling_default_app:
-    git: git://github.com/dzenanr/dartling_default_app.git
+  dartling: any
+  dartling_default_app: any
   
